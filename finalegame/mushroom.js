@@ -1,19 +1,20 @@
-class Mushroom extends LiveCreator{
+
+let LiveCreator = require("./LifeParent")
+
+
+module.exports = class Mushroom extends LiveCreator{
     constructor(x, y){
         super(x, y);
         this.multiply = 0;
     }
 
-    chooseCell(ch) {
-        return super.chooseCell(ch)
-    }
 
     mul () {
         this.multiply++;
-        var emptyCells = this.chooseCell(0);
-        var chooseObject = random(emptyCells);
+
+        var chooseObject = this.random(0);
  
-        if(chooseObject && this.multiply >= 2){
+        if(chooseObject && this.multiply >= 4){
             var newX = chooseObject[0];
             var newY = chooseObject[1];
             matrix[newY][newX] = 4;

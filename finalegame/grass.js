@@ -1,17 +1,18 @@
-class Grass extends LiveCreator{
+
+let LiveCreator = require("./LifeParent")
+
+
+module.exports = class Grass extends LiveCreator{
     constructor(x, y){
         super(x, y);
         this.multiply = 0;
     }
 
-    chooseCell(ch) {
-        return super.chooseCell(ch)
-    }
 
     mul () {
         this.multiply++;
-        var emptyCells = this.chooseCell(0);
-        var chooseObject = random(emptyCells);
+        // var emptyCells = this.chooseCell(0);
+        var chooseObject = this.random(0);
  
         if(chooseObject && this.multiply >= 2){
             var newX = chooseObject[0];

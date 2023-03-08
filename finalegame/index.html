@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <!-- <script src="LifeParent.js"></script>
+    <script src="mushroom.js"></script>
+    <script src="predator.js"></script>
+    <script src="grasseter.js"></script>
+    <script src="grass.js"></script>-->
+    <script src="script.js"></script> 
+    <div>
+        <button onclick="winter()">winter</button>
+        <button onclick="spring()">spring</button>
+        <button onclick="summer()">summer</button>
+        <button onclick="autumn()">autumn</button>
+        <button onclick="randomColor()">random color</button>
+    </div>
+    
+
+    <div>
+        <div class="div">
+            <h5 id="grass"></h5>
+            <h6>Խոտը բազմանում է:</h6>
+            <div class="color" id="grasscolor"></div>
+        </div>
+        <div class="div">
+            <h5 id="grasseter"></h5>
+            <h6>Խոտակերը ուտում է խոտերին և սնկերին:</h6>
+            <div class="color" id="grassetercolor"></div>
+        </div>
+        <div class="div">
+            <h5 id="predator"></h5>
+            <h6>Ամենակերը ուտում է խոտերին և խոտակերներին:</h6>
+            <div class="color" id="predatorcolor"></div>
+        </div>
+        <div class="div">
+            <h5 id="mushroom"></h5>
+            <h6>Սունկը թունավոր է և բազմանում է:</h6>
+            <div class="color" id="mushroomcolor"></div>
+        </div>
+        <div class="div"> 
+            <h5 id="rock"></h5>
+            <h6>Քարը ոչինչ չի անում:</h6>
+            <div class="color" id="rockcolor"></div>
+        </div>
+        <div class="div">
+            <h5 id="tntblock"></h5>
+            <h6>Tntblock-ը պայթում է:</h6>
+            <div class="color" id="tntblockcolor"></div>
+        </div>
+    </div>
+    <br>
+
+
+
+
+
+</body>
+</html>
