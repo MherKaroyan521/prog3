@@ -17,15 +17,29 @@
     <script src="grass.js"></script>-->
     <script src="script.js"></script> 
     <div>
-        <button onclick="winter()">winter</button>
-        <button onclick="spring()">spring</button>
-        <button onclick="summer()">summer</button>
-        <button onclick="autumn()">autumn</button>
-        <button onclick="randomColor()">random color</button>
+        <div class="div">
+            <button onclick="winter()">winter</button>
+            <button onclick="spring()">spring</button>
+            <button onclick="summer()">summer</button>
+            <button onclick="autumn()">autumn</button>
+            <button onclick="randomColor()">random color</button>
+            <button onclick="restart()">restart</button>
+        </div>
+        
+        <div id="input" class="div">
+            Grass count: <input type="number" id="grassCount" min="0">
+            Grasseter count: <input type="number" id="grasseterCount" min="0">
+            Mushroom count: <input type="number" id="predatorCount" min="0">
+            Predator count: <input type="number" id="mushroomCount" min="0">
+            Rock count: <input type="number" id="rockCount" min="0">
+            Tntblock count: <input type="number" id="tntblockCount" min="0">
+            Randomlife count: <input type="number" id="rabdomlifeCount" min="0">
+        </div>
+
     </div>
     
 
-    <div>
+    <div id="main">
         <div class="div">
             <h5 id="grass"></h5>
             <h6>Խոտը բազմանում է:</h6>
@@ -56,12 +70,11 @@
             <h6>Tntblock-ը պայթում է:</h6>
             <div class="color" id="tntblockcolor"></div>
         </div>
+        <div class="div">
+            <h5 id="randomlife"></h5>
+            <h6>Randomlife-ը իր ուղահայաց ու հորիզոնական <br> ուղություններով պատահական օբյեկտներ է ստեղծում:</h6>
+            <div class="color" id="randomlifecolor"></div>
+        </div>
     </div>
-    <br>
-
-
-
-
-
 </body>
 </html>

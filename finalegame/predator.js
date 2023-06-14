@@ -1,5 +1,5 @@
 
-let LiveCreator = require("./LifeParent")
+let LiveCreator = require("./LifeParent");
 
 module.exports = class Predator extends LiveCreator{
     constructor(x, y){

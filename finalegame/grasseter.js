@@ -1,5 +1,5 @@
 
-let LiveCreator = require("./LifeParent")
+let LiveCreator = require("./LifeParent");
 
 module.exports = class GrassEater extends LiveCreator{
     constructor(x,y){
@@ -93,10 +93,11 @@ module.exports = class GrassEater extends LiveCreator{
     }
     move() {
         this.getNewCoordinates()
+        
+        this.energy--
         if (this.energy < 0){
             this.die()
         }
-        this.energy--
         var newCell = this.random(0);
         
         if(newCell && this.energy >= 0) {

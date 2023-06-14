@@ -19,14 +19,16 @@ matrix = []
 grasses = [];
 grassEaterArr = [];
 predatorArr = [];
-mushroomArr = []
-tntblockArr = []
+mushroomArr = [];
+tntblockArr = [];
+randomlifeArr = [];
 
 let Grass = require("./grass")
 let GrassEater = require("./grasseter")
 let Mushroom = require("./mushroom")
 let Predator = require("./predator")
 let TntBlock = require("./tntblock")
+let RandomLife = require("./randomlife")
 
 
 function random(min = 0,max)
@@ -37,14 +39,15 @@ function random(min = 0,max)
 
 
 
-function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount, mushroomCount, rockCount, tntBlockCount) {
+function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount, mushroomCount, rockCount, tntBlockCount, randomLifeCount) {
     matrix = []
 
     grasses = [];
     grassEaterArr = [];
     predatorArr = [];
-    mushroomArr = []
-    tntblockArr = []
+    mushroomArr = [];
+    tntblockArr = [];
+    randomlifeArr = [];
     
     for (let i = 0; i < matrixSize; i++) {
        matrix[i] = []
@@ -82,6 +85,11 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount,
        let y = Math.floor(random(0,matrixSize-1));
        matrix[y][x] = 6;
    }
+   for (let i = 0; i < randomLifeCount; i++) {
+       let x = Math.floor(random(0,matrixSize-1));
+       let y = Math.floor(random(0,matrixSize-1));
+       matrix[y][x] = 7;
+   }
 
    for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
@@ -101,6 +109,9 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount,
             } else if (matrix[y][x] == 6) {
                 let tntblockObject = new TntBlock(x, y);
                 tntblockArr.push(tntblockObject)
+            } else if (matrix[y][x] == 7) {
+                let randomlifeObject = new RandomLife(x, y);
+                randomlifeArr.push(randomlifeObject)
             }
 
         }
@@ -108,10 +119,17 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount,
     io.emit("send message",matrix)
 }
 
+matrixGenerator(25, 100, 40, 10, 10, 10, 4, 3)
+
+io.on("connection", (socket) => {
+    socket.on("matrix", (matrixRestart, grass, grasseter, predator, mushroom, rock, tntblock, randomlife) => {
+        if(matrixRestart == 1){
+            matrixGenerator(25, grass, grasseter, predator, mushroom, rock, tntblock,randomlife)
+        }
+    });
+  });
 
 
-
-matrixGenerator(25, 10, 40, 10, 10, 10, 4)
 
 
 function generate(){
@@ -140,7 +158,10 @@ function gameMove(){
   }
   for (let i in tntblockArr) {
       tntblockArr[i].move()
-  } 
+  }
+  for (let i in randomlifeArr) {
+      randomlifeArr[i].move()
+  }
   io.emit("send message",matrix)
 
 }

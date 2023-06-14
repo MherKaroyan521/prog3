@@ -1,5 +1,5 @@
 
-let LiveCreator = require("./LifeParent")
+let LiveCreator = require("./LifeParent");
 
 
 module.exports = class Mushroom extends LiveCreator{
@@ -14,7 +14,7 @@ module.exports = class Mushroom extends LiveCreator{
 
         var chooseObject = this.random(0);
  
-        if(chooseObject && this.multiply >= 4){
+        if(chooseObject && this.multiply >= 10){
             var newX = chooseObject[0];
             var newY = chooseObject[1];
             matrix[newY][newX] = 4;
