@@ -1,7 +1,7 @@
 
 var express = require('express');
 var app = express();
-var server = require('http').createServer(app)
+var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
 
@@ -14,21 +14,22 @@ app.get('/', function (req, res) {
 
 server.listen(3000);
 
-matrix = []
+matrix = [];
 
 grasses = [];
 grassEaterArr = [];
 predatorArr = [];
 mushroomArr = [];
+rockcount = 0;
 tntblockArr = [];
 randomlifeArr = [];
 
-let Grass = require("./grass")
-let GrassEater = require("./grasseter")
-let Mushroom = require("./mushroom")
-let Predator = require("./predator")
-let TntBlock = require("./tntblock")
-let RandomLife = require("./randomlife")
+let Grass = require("./grass");
+let GrassEater = require("./grasseter");
+let Mushroom = require("./mushroom");
+let Predator = require("./predator");
+let TntBlock = require("./tntblock");
+let RandomLife = require("./randomlife");
 
 
 function random(min = 0,max)
@@ -40,17 +41,18 @@ function random(min = 0,max)
 
 
 function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount, mushroomCount, rockCount, tntBlockCount, randomLifeCount) {
-    matrix = []
+    matrix = [];
 
     grasses = [];
     grassEaterArr = [];
     predatorArr = [];
     mushroomArr = [];
+    rockcount = 0;
     tntblockArr = [];
     randomlifeArr = [];
     
     for (let i = 0; i < matrixSize; i++) {
-       matrix[i] = []
+       matrix[i] = [];
        for (let o = 0; o < matrixSize; o++) {
            matrix[i][o] = 0;
        }
@@ -79,6 +81,7 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount,
        let x = Math.floor(random(0,matrixSize-1));
        let y = Math.floor(random(0,matrixSize-1));
        matrix[y][x] = 5;
+       rockcount++;
    }
    for (let i = 0; i < tntBlockCount; i++) {
        let x = Math.floor(random(0,matrixSize-1));
@@ -96,53 +99,38 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount,
 
             if (matrix[y][x] == 1) {
                 let grassObject = new Grass(x, y);
-                grasses.push(grassObject)
+                grasses.push(grassObject);
             } else if (matrix[y][x] == 2) {
                 let grassEatObject = new GrassEater(x, y);
-                grassEaterArr.push(grassEatObject)
+                grassEaterArr.push(grassEatObject);
             } else if (matrix[y][x] == 3) {
                 let predatorObject = new Predator(x, y);
-                predatorArr.push(predatorObject)
+                predatorArr.push(predatorObject);
             } else if (matrix[y][x] == 4) {
                 let mushroomObject = new Mushroom(x, y);
-                mushroomArr.push(mushroomObject)
+                mushroomArr.push(mushroomObject);
             } else if (matrix[y][x] == 6) {
                 let tntblockObject = new TntBlock(x, y);
-                tntblockArr.push(tntblockObject)
+                tntblockArr.push(tntblockObject);
             } else if (matrix[y][x] == 7) {
                 let randomlifeObject = new RandomLife(x, y);
-                randomlifeArr.push(randomlifeObject)
+                randomlifeArr.push(randomlifeObject);
             }
 
         }
     }
-    io.emit("send message",matrix)
+    io.emit("send message",matrix);
 }
 
-matrixGenerator(25, 100, 40, 10, 10, 10, 4, 3)
+matrixGenerator(25, 100, 40, 10, 10, 50, 4, 3);
 
 io.on("connection", (socket) => {
     socket.on("matrix", (matrixRestart, grass, grasseter, predator, mushroom, rock, tntblock, randomlife) => {
         if(matrixRestart == 1){
-            matrixGenerator(25, grass, grasseter, predator, mushroom, rock, tntblock,randomlife)
+            matrixGenerator(25, grass, grasseter, predator, mushroom, rock, tntblock,randomlife);
         }
     });
   });
-
-
-
-
-function generate(){
-    matrixGenerator(20, 10, 20, 10, 10, 10, 10)    
-}
-
-   
-
-
-
-
-
-
 function gameMove(){
    for (let i in grasses) {
       grasses[i].mul();
@@ -151,19 +139,26 @@ function gameMove(){
       grassEaterArr[i].eat();
   }
   for (let i in predatorArr) {
-      predatorArr[i].eat()
+      predatorArr[i].eat();
   }
   for (let i in mushroomArr) {
-      mushroomArr[i].mul()
+      mushroomArr[i].mul();
   }
   for (let i in tntblockArr) {
-      tntblockArr[i].move()
+      tntblockArr[i].move();
   }
   for (let i in randomlifeArr) {
-      randomlifeArr[i].move()
+      randomlifeArr[i].move();
   }
-  io.emit("send message",matrix)
-
+  io.emit("send message",matrix);
+  io.emit("send count", {
+    grassCount: grasses.length,
+    grasseterCount: grassEaterArr.length,
+    predatorCount: predatorArr.length,
+    mushroomCount: mushroomArr.length,
+    rockCount: rockcount,
+    tntblockCount: tntblockArr.length,
+    randomlifeCount: randomlifeArr.length
+  });
 }
-setInterval(gameMove, 500)
-io.on("matrix",generate)
+setInterval(gameMove, 500);

@@ -1,4 +1,3 @@
-
 let LiveCreator = require("./LifeParent");
 
 module.exports = class Predator extends LiveCreator{
@@ -9,12 +8,12 @@ module.exports = class Predator extends LiveCreator{
     getNewCordinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
+            [this.x    , this.y - 1],
             [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
+            [this.x - 1, this.y    ],
+            [this.x + 1, this.y    ],
             [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
+            [this.x    , this.y + 1],
             [this.x + 1, this.y + 1]
         ];
     }
@@ -23,8 +22,8 @@ module.exports = class Predator extends LiveCreator{
     return z;
     }
     mul() {
-        this.getNewCordinates()
-        let exact = this.random(0)
+        this.getNewCordinates();
+        let exact = this.random(0);
 
         if (exact && this.energy > 20) {
             let x = exact[0];
@@ -38,11 +37,11 @@ module.exports = class Predator extends LiveCreator{
         }
     }
     eat() {
-        this.getNewCordinates()
+        this.getNewCordinates();
         var emptyCells1 = this.random(1);
         var emptyCells2 = this.random(2);
-        var cells = [emptyCells1,emptyCells2]
-        var randomfound = this.getRandInt(0,cells.length-1)
+        var cells = [emptyCells1,emptyCells2];
+        var randomfound = this.getRandInt(0,cells.length-1);
         var exact = cells[randomfound];
 
         if (exact) {
@@ -52,13 +51,13 @@ module.exports = class Predator extends LiveCreator{
     
             for (let i = 0; i < grasses.length; i++) {
                 if (grasses[i].x == x && grasses[i].y == y) {
-                        grasses.splice(i, 1)
+                        grasses.splice(i, 1);
                         break;
                 }
                 else {
                     for (let i = 0; i < grassEaterArr.length; i++) {
                         if (grassEaterArr[i].x == x && grassEaterArr[i].y == y) {
-                                grassEaterArr.splice(i, 1)
+                                grassEaterArr.splice(i, 1);
                                 break;
                         }
                     }
@@ -66,53 +65,53 @@ module.exports = class Predator extends LiveCreator{
             }
     
     
-            matrix[y][x] = 3
-            matrix[this.y][this.x] = 0
+            matrix[y][x] = 3;
+            matrix[this.y][this.x] = 0;
     
             this.x = x;
-            this.y = y
+            this.y = y;
     
             if (this.energy > 20) {
-                    this.mul()
+                    this.mul();
             }
         } else {
-                this.move()
-        
+                this.move();
         }
         
     }
     move() {
-        this.getNewCordinates()
-        let exact = this.random(0)
+        this.getNewCordinates();
+        let exact = this.random(0);
 
         if (exact) {
+
             let x = exact[0];
             let y = exact[1];
 
-            matrix[y][x] = 3
-            matrix[this.y][this.x] = 0
+            matrix[y][x] = 3;
+            matrix[this.y][this.x] = 0;
 
             this.x = x;
             this.y = y;
 
-            this.energy--
+            this.energy--;
 
             if (this.energy < 0) {
-                this.die()
+                this.die();
             }
         } else {
-            this.energy--
+            this.energy--;
             if (this.energy < 0) {
-                this.die()
+                this.die();
             }
         }
     }
     die() {
         for (let i = 0; i < predatorArr.length; i++) {
             if (predatorArr[i].x == this.x && predatorArr[i].y == this.y) {
-                predatorArr.splice(i, 1)
+                predatorArr.splice(i, 1);
             }
         }
-        matrix[this.y][this.x] = 0
+        matrix[this.y][this.x] = 0;
     }
 }

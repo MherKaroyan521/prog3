@@ -11,48 +11,40 @@ let color1 = [
     ["#acacac","#13FF00", "#E4FF00", "#FF3200", "#00B9FF","black","pink", "orange"],
     ["#acacac","#C5FF00", "#FFFB00", "#FD4747", "#004CC0","black","pink", "orange"],
     ["green", "FFE800", "red", "blue","black","pink","#FAFBF2", "#E7F2A1", "#FABEB2", "#A9C8F8","#13FF00", "#E4FF00", "#FF3200", "#00B9FF","#C5FF00", "#FFFB00", "#FD4747", "#004CC0","black","orange"]
-]
+];
 
 let colorNumber = 1;
 
 let matrixRestart = 0;
 
-let grassCount;
-let grasseterCount;
-let mushroomCount;
-let predatorCount;
-let rockCount;
-let tntblockCount;
-let randomlifeCount;
 
 function winter(){
-    colorNumber = 0
+    colorNumber = 0;
 }
 function spring(){
-    colorNumber = 1
+    colorNumber = 1;
 }
 function summer(){
-    colorNumber = 2
+    colorNumber = 2;
 }
 function autumn(){
-    colorNumber = 3
+    colorNumber = 3;
 }
 function randomColor(){
-    colorNumber = 4
+    colorNumber = 4;
 }
 function restart(){
-    matrixRestart = 1
-    grassCount = document.getElementById("grassCount").value
-    grasseterCount = document.getElementById("grasseterCount").value
-    mushroomCount = document.getElementById("mushroomCount").value
-    predatorCount = document.getElementById("predatorCount").value
-    rockCount = document.getElementById("rockCount").value
-    tntblockCount = document.getElementById("tntblockCount").value
-    randomlifeCount = document.getElementById("rabdomlifeCount").value
+    matrixRestart = 1;
+    grassCount = document.getElementById("grassCount").value;
+    grasseterCount = document.getElementById("grasseterCount").value;
+    mushroomCount = document.getElementById("mushroomCount").value;
+    predatorCount = document.getElementById("predatorCount").value;
+    rockCount = document.getElementById("rockCount").value;
+    tntblockCount = document.getElementById("tntblockCount").value;
+    randomlifeCount = document.getElementById("rabdomlifeCount").value;
 }
 
 
-let count = [0,0,0,0,0,0,0]
 function setup() {
     
    
@@ -62,7 +54,6 @@ function setup() {
     background('#acacac');
 }
 function update(matrix) {
-    count = [0,0,0,0,0,0,0,0]
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
                 if(colorNumber == 4){
@@ -70,7 +61,7 @@ function update(matrix) {
                         fill("#acacac");
                         rect(x * side, y * side, side, side);
                     }else{
-                        let colorColor = Math.floor(random(0,(color1[colorNumber].length)))
+                        let colorColor = Math.floor(random(0,(color1[colorNumber].length)));
                         fill(color1[colorNumber][colorColor]);
                         rect(x * side, y * side, side, side);
                     }
@@ -79,25 +70,24 @@ function update(matrix) {
                     fill(color1[colorNumber][matrix[y][x]]);
                     rect(x * side, y * side, side, side);
                 }
-                count[matrix[y][x]]++
         }
     }
     socket. emit("matrix", matrixRestart, grassCount, grasseterCount, mushroomCount, predatorCount, rockCount, tntblockCount,randomlifeCount);
-    matrixRestart = 0
+    matrixRestart = 0;
 
 
 
 
 } 
-function DOM(){
+function DOM(allCount){
 
-    document.getElementById("grass").innerHTML = "Խոտ " + count[1];
-    document.getElementById("grasseter").innerHTML = "Խոտակեր " + count[2];
-    document.getElementById("predator").innerHTML = "Ամենակեր " + count[3];
-    document.getElementById("mushroom").innerHTML = "Սունկ " + count[4];
-    document.getElementById("rock").innerHTML = "Քար " + count[5];
-    document.getElementById("tntblock").innerHTML = "Tntblock " + count[6]; 
-    document.getElementById("randomlife").innerHTML = "Randomlife " + count[7];
+    document.getElementById("grass").innerHTML = "Խոտ " + allCount.grassCount;
+    document.getElementById("grasseter").innerHTML = "Խոտակեր " + allCount.grasseterCount;
+    document.getElementById("predator").innerHTML = "Ամենակեր " + allCount.predatorCount;
+    document.getElementById("mushroom").innerHTML = "Սունկ " + allCount.mushroomCount;
+    document.getElementById("rock").innerHTML = "Քար " + allCount.rockCount;
+    document.getElementById("tntblock").innerHTML = "Tntblock " + allCount.tntblockCount; 
+    document.getElementById("randomlife").innerHTML = "Randomlife " + allCount.randomlifeCount;
 
 
     if(colorNumber == 4){
@@ -121,12 +111,5 @@ function DOM(){
     
     
 }
-
-socket.emit("matrix", 1);
-
-setInterval(DOM, 500)
-// setInterval(
-//     select = document.getElementById("select").value,
-//     500
-// )
-socket.on("send message", update)
+socket.on("send message", update);
+socket.on("send count", DOM);

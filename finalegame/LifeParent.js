@@ -1,4 +1,3 @@
-
 module.exports = class LiveCreator{
     constructor(x, y){
         this.x = x;
@@ -13,7 +12,8 @@ module.exports = class LiveCreator{
             [this.x    , this.y + 1],
             [this.x + 1, this.y + 1]
         ];
-    }chooseCell(ch) {
+    }
+    chooseCell(ch) {
         var found = [];
         for (var i in this.directions) {
             var newX = this.directions[i][0];
@@ -27,7 +27,7 @@ module.exports = class LiveCreator{
     }
     random(ch){
         let found = this.chooseCell(ch);
-        let result = Math.floor(Math.random()*found.length)
+        let result = Math.floor(Math.random()*found.length);
         return found[result];
     }
 }

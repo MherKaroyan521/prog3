@@ -1,4 +1,3 @@
-
 let LiveCreator = require("./LifeParent");
 
 
@@ -11,7 +10,6 @@ module.exports = class Grass extends LiveCreator{
 
     mul () {
         this.multiply++;
-        // var emptyCells = this.chooseCell(0);
         var chooseObject = this.random(0);
  
         if(chooseObject && this.multiply >= 2){

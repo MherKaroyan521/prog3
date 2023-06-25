@@ -1,10 +1,9 @@
-
 let LiveCreator = require("./LifeParent");
 
 module.exports = class GrassEater extends LiveCreator{
     constructor(x,y){
-        super(x,y)
-        this.energy = 8
+        super(x,y);
+        this.energy = 8;
     }
     getNewCoordinates(){
         this.directions = [
@@ -19,14 +18,12 @@ module.exports = class GrassEater extends LiveCreator{
         ];
     }
      
-    getRandInt(min,max)
-    {
+    getRandInt(min,max){
         var z = Math.floor(Math.random()*(max-min+1)) + min;
         return z;
     }
     mul () {
-        // var emptyCells = this.chooseCell(0);
-        this.getNewCoordinates()
+        this.getNewCoordinates();
         var chooseObject = this.random(0);
  
         if(chooseObject){
@@ -41,29 +38,29 @@ module.exports = class GrassEater extends LiveCreator{
     }
 
     eat() {
-        this.getNewCoordinates()
+        this.getNewCoordinates();
         var emptyCells1 = this.random(1);
         var emptyCells2 = this.random(4);
-        var cells = [emptyCells1,emptyCells2]
-        var randomfound = this.getRandInt(0,cells.length-1)
+        var cells = [emptyCells1,emptyCells2];
+        var randomfound = this.getRandInt(0,cells.length-1);
 
         var newCell = cells[randomfound];
         if(newCell) {
             
             var newX = newCell[0];
             var newY = newCell[1];
-            matrix[newY][newX] = matrix[this.y][this.x]
+            matrix[newY][newX] = matrix[this.y][this.x];
             matrix[this.y][this.x] = 0;
-            this.x = newX
-            this.y = newY
+            this.x = newX;
+            this.y = newY;
             if(this.energy > 15) {
-                this.mul()
+                this.mul();
             }
                 
             for (var i in mushroomArr) {
                 if (newX == mushroomArr[i].x && newY == mushroomArr[i].y) {
                     mushroomArr.splice(i, 1);
-                    this.energy -= 3
+                    this.energy -= 3;
                         
                     break;
                 }
@@ -73,43 +70,38 @@ module.exports = class GrassEater extends LiveCreator{
                     
                 if (newX == grasses[i].x && newY == grasses[i].y) {
                     grasses.splice(i, 1);
-                    this.energy += 5
+                    this.energy += 5;
                     break;
                 }
             }
 
             if (this.energy < 0){
-                this.die()
+                this.die();
             }
-            
-            
-            
-            
         } else {
-            this.move()
+            this.move();
         }
-        
-        
     }
     move() {
-        this.getNewCoordinates()
+        this.getNewCoordinates();
         
-        this.energy--
+        this.energy--;
         if (this.energy < 0){
-            this.die()
+            this.die();
         }
         var newCell = this.random(0);
         
         if(newCell && this.energy >= 0) {
+            matrix[this.y][this.x] = 2;
             var newX = newCell[0];
             var newY = newCell[1];
-            matrix[newY][newX] = matrix[this.y][this.x]
+            matrix[newY][newX] = matrix[this.y][this.x];
             matrix[this.y][this.x] = 0;
-            this.x = newX
-            this.y = newY
+            this.x = newX;
+            this.y = newY;
         }
         if (this.energy < 0){
-            this.die()
+            this.die();
         }
     }
     die() {
@@ -123,4 +115,3 @@ module.exports = class GrassEater extends LiveCreator{
     }
 
 }
-
